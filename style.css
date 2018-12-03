@@ -1,0 +1,67 @@
+#wrapper{
+    display: flex;
+    flex-flow: column;
+    flex-wrap: wrap;
+}
+.user-card{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    width: 430px;
+    height: 200px;
+    background: rgb(208, 253, 235);
+    border: 1px solid rgb(26, 128, 87);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px -3px #000000;
+    margin: 5px 5px;
+}
+.inf{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 55%;
+    height: 90%;
+    font-size: 1.1em;
+}
+.user-buttons{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    margin: 72px 164px;
+}
+input{
+    width: 220px;
+    font: 1.2em Tahoma;
+}
+input::placeholder{
+    color:rgb(5, 147, 218);
+}
+#avatar{
+    width: 40%;
+    border-radius: 3px;
+}
+#card-id{
+    color:red;
+}
+button{
+    width: 100px;
+}
+#form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+    width: 400px;
+    height: 350px;
+    background: rgb(208, 253, 235);
+    border-radius: 5px;
+    border:1px solid rgb(26, 128, 87);
+    box-shadow: 0px 0px 10px -3px #000000;
+    font-size: 1.2em;
+}
+.open-form#wrapper-form{
+    display: none;
+}
