@@ -3,7 +3,6 @@ const DELETE_ICON = 'http://www.defaulticon.com/images/icons32x32/delete.png?ito
 const ADD_ICON = 'http://www.defaulticon.com/images/icons32x32/add.png?itok=sIL2bSuC';
 const URL = 'https://test-users-api.herokuapp.com';
 
-
 class Icon {            // іконки кнопки
     constructor(options){            
         var {
@@ -36,6 +35,7 @@ class Icon {            // іконки кнопки
     }
 }
 
+
 const request = function (endpoint, method, data){    //  запит
     const body = method === 'GET'? void 0 : JSON.stringify(data);
     return fetch(`${URL}/${endpoint}`, {
@@ -53,7 +53,8 @@ const request = function (endpoint, method, data){    //  запит
 let usersList = [];
 
 function renderUsers(){  // відображення юзерів
-    function renderOneUser(user){
+    function renderOneUser(user, index){
+        debugger;
         const wrapperDiv = document.querySelector('#wrapper');
         const userCard = document.createElement('div');
         userCard.className = 'user-card';
@@ -66,11 +67,11 @@ function renderUsers(){  // відображення юзерів
                 <span>ID:<span id="card-id">${user.id}</span></span>
                 <div>
                 <span>Ім'я:</span></br>
-                <input id="edit-name" placeholder="${user.name}">
+                <input id="edit-name${index}" placeholder="${user.name}">
                 </div>
                 <div>  
                 <span>Вік:</span></br>
-                <input id="edit-age" placeholder="${user.age}">
+                <input id="edit-age${index}" placeholder="${user.age}">
                 </div>
             </div>
         `;
@@ -99,8 +100,9 @@ function renderUsers(){  // відображення юзерів
 
     const wrapperDiv = document.querySelector('#wrapper');    
     wrapperDiv.innerHTML = "";
-    usersList.forEach((user)=>{
-    renderOneUser(user);
+    
+    usersList.forEach((user, index)=>{
+    renderOneUser(user, index);
     });
 };
 
@@ -117,24 +119,26 @@ const addUser = async ()=>{  // POST
     const name = document.querySelector('#add-name').value;
     const age = document.querySelector('#add-age').value;
     try{
-        const userResponse = await request('users/', 'POST', {
+        const response = await request('users/', 'POST', {
             name,
-            age
-        })
-        usersList.push(userResponse.data)
+            age,
+        });
+        usersList.push(response.data)
         renderUsers()
     } catch(err){
         console.log(err)
     }
 }
-const editUser = async (event, id)=>{ // PUT
-    const name = document.querySelector('#edit-name').value;
-    const age = document.querySelector('#edit-age').value;
+const editUser = async (event, id, index)=>{ // PUT
+    debugger;
+    let name = document.querySelector(`#edit-name${index}`).value;
+    let age = document.querySelector(`#edit-age${index}`).value;
     try{
         const response = await request (`users/${id}`, 'PUT', {
             name,
             age
         });
+        usersList.push(response.data)
         renderUsers()
     } catch(err){
         console.log(err)
@@ -161,8 +165,8 @@ openFormButton.addEventListener('click', function(){
 const form = document.querySelector('#form')
 const addIcon = new Icon({                
     source: ADD_ICON,                          
-    width: 44,                                 
-    heigt: 44,    
+    width: 50,                                 
+    heigt: 50,    
     parentElement: form,                           
     onClick: function(event){ 
         addUser()
