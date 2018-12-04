@@ -1,9 +1,9 @@
-#wrapper{
+#wrapper {
     display: flex;
     flex-flow: column;
     flex-wrap: wrap;
 }
-.user-card{
+.user-card {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
@@ -17,7 +17,7 @@
     margin: 9px 5px;
 }
 
-.inf{
+.inf {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -25,39 +25,39 @@
     height: 90%;
     font-size: 1.1em;
 }
-.user-buttons{
+.user-buttons {
     display: flex;
     flex-direction: row;
     position: absolute;
     margin: 72px 147px;
 }
-input{
+input {
     width: 220px;
     font: 1.2em Tahoma;
 }
-input::placeholder{
+input::placeholder {
     color:rgb(5, 147, 218);
 }
-#avatar{
+#avatar {
     width: 40%;
     border-radius: 3px;
 }
-#go-up{
+#go-up {
     position: absolute;
     text-decoration-line: none;
     color: rgb(153, 147, 147);
     margin: 110px 132px;
 }
-a{
+a {
     text-decoration-line: none;
 }
-#card-id{
+#card-id {
     color:red;
 }
-button{
+button {
     width: 100px;
 }
-#form{
+#form {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -72,6 +72,6 @@ button{
     box-shadow: 0px 0px 10px -3px #000000;
     font-size: 1.2em;
 }
-.open-form#wrapper-form{
+.open-form#wrapper-form {
     display: none;
 }
