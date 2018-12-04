@@ -14,8 +14,9 @@
     border: 1px solid rgb(26, 128, 87);
     border-radius: 5px;
     box-shadow: 0px 0px 10px -3px #000000;
-    margin: 5px 5px;
+    margin: 9px 5px;
 }
+
 .inf{
     display: flex;
     flex-direction: column;
@@ -28,7 +29,7 @@
     display: flex;
     flex-direction: row;
     position: absolute;
-    margin: 72px 164px;
+    margin: 72px 147px;
 }
 input{
     width: 220px;
@@ -40,6 +41,15 @@ input::placeholder{
 #avatar{
     width: 40%;
     border-radius: 3px;
+}
+#go-up{
+    position: absolute;
+    text-decoration-line: none;
+    color: rgb(153, 147, 147);
+    margin: 110px 132px;
+}
+a{
+    text-decoration-line: none;
 }
 #card-id{
     color:red;

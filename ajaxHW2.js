@@ -1,5 +1,6 @@
 const SAVE_ICON = 'http://www.defaulticon.com/images/icons32x32/save.png?itok=sWHq42i3';
 const DELETE_ICON = 'http://www.defaulticon.com/images/icons32x32/delete.png?itok=zIkyZPyc';
+const USERPAGE_ICON = 'http://www.defaulticon.com/images/icons32x32/user.png?itok=e7PMoF4Z';
 const ADD_ICON = 'http://www.defaulticon.com/images/icons32x32/add.png?itok=sIL2bSuC';
 const URL = 'https://test-users-api.herokuapp.com';
 
@@ -54,7 +55,6 @@ let usersList = [];
 
 function renderUsers(){  // відображення юзерів
     function renderOneUser(user, index){
-        debugger;
         const wrapperDiv = document.querySelector('#wrapper');
         const userCard = document.createElement('div');
         userCard.className = 'user-card';
@@ -75,15 +75,27 @@ function renderUsers(){  // відображення юзерів
                 </div>
             </div>
         `;
+        if(index < (usersList.length - 3) && index%2){
+            userCard.innerHTML += `<a id="go-up" href=#>На початок списку</a>`
+        };
         wrapperDiv.prepend(userCard);
         userCard.append(userButtons);
+        const userPageIcon = new Icon({                
+            source: USERPAGE_ICON,                          
+            width: 34,                                 
+            heigt: 34,    
+            parentElement: userButtons,                           
+            onClick: function(event){              
+                window.location.href=`user.html?id=${user.id}`;            
+            }                                                                                         
+        });   
         const saveIcon = new Icon({                
             source: SAVE_ICON,                          
             width: 34,                                 
             heigt: 34,    
             parentElement: userButtons,                           
-            onClick: function(event){                
-                editUser(userCard, user.id)            
+            onClick: function(event){              
+                editUser(userCard, user.id, index)            
             }                                                                                         
         });    
         const deleteIcon = new Icon({                
@@ -108,7 +120,7 @@ function renderUsers(){  // відображення юзерів
 
 const getUsers = async ()=>{ // GET
     try{
-        let response = await request('users/');
+        const response = await request('users/');
         usersList = response.data;
         renderUsers()
     } catch(err){
@@ -119,18 +131,18 @@ const addUser = async ()=>{  // POST
     const name = document.querySelector('#add-name').value;
     const age = document.querySelector('#add-age').value;
     try{
-        const response = await request('users/', 'POST', {
+        await request('users/', 'POST', {
             name,
             age,
         });
-        usersList.push(response.data)
+        const response = await request('users/');
+        usersList = response.data;
         renderUsers()
     } catch(err){
         console.log(err)
     }
 }
 const editUser = async (event, id, index)=>{ // PUT
-    debugger;
     let name = document.querySelector(`#edit-name${index}`).value;
     let age = document.querySelector(`#edit-age${index}`).value;
     try{
@@ -138,7 +150,7 @@ const editUser = async (event, id, index)=>{ // PUT
             name,
             age
         });
-        usersList.push(response.data)
+        usersList[index] = response.data;
         renderUsers()
     } catch(err){
         console.log(err)
