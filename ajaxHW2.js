@@ -16,7 +16,8 @@ class Icon {            // іконки кнопки
         this.icon = document.createElement('img');   
         this.icon.style.width = `${width}px`;        
         this.icon.style.height = `${height}px`;
-        this.icon.style.transition = `opacity .5s`;    
+        this.icon.style.transition = `opacity .5s`; 
+        this.icon.style.cursor = 'pointer';   
         this.icon.src = source;                      
         this.icon.addEventListener('click',(event)=>{        
             this.animateIcon();                      
