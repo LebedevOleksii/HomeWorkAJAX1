@@ -5,7 +5,7 @@ const ADD_ICON = 'http://www.defaulticon.com/images/icons32x32/add.png?itok=sIL2
 const URL = 'https://test-users-api.herokuapp.com';
 
 class Icon {            // іконки кнопки
-    constructor(options){            
+    constructor(options) {            
         var {
             source, 
             width, 
@@ -19,26 +19,26 @@ class Icon {            // іконки кнопки
         this.icon.style.transition = `opacity .5s`; 
         this.icon.style.cursor = 'pointer';   
         this.icon.src = source;                      
-        this.icon.addEventListener('click',(event)=>{        
+        this.icon.addEventListener('click',(event) => {        
             this.animateIcon();                      
             onClick(event);
         })
         this.appendToElement(parentElement)               
     } 
-    appendToElement(element){       
+    appendToElement(element) {       
         element.append(this.icon);
     }
 
-    animateIcon(){         
+    animateIcon() {         
         this.icon.style.opacity = 0;  
-        setTimeout(()=>{
+        setTimeout(() => {
             this.icon.style.opacity = 1;
         },300);
     }
 }
 
 
-const request = function (endpoint, method, data){    //  запит
+const request = (endpoint, method, data) => {    //  запит
     const body = method === 'GET'? void 0 : JSON.stringify(data);
     return fetch(`${URL}/${endpoint}`, {
         method,
@@ -48,14 +48,14 @@ const request = function (endpoint, method, data){    //  запит
             'Content-Type': 'application/json',
           }
     })
-    .then((res)=>res.json())
-    .catch((err)=>console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 };
 
 let usersList = [];
 
-function renderUsers(){  // відображення юзерів
-    function renderOneUser(user, index){
+const renderUsers = () => {  // відображення юзерів
+    function renderOneUser(user, index) {
         const wrapperDiv = document.querySelector('#wrapper');
         const userCard = document.createElement('div');
         userCard.className = 'user-card';
@@ -76,7 +76,7 @@ function renderUsers(){  // відображення юзерів
                 </div>
             </div>
         `;
-        if(index < (usersList.length - 3) && index%2){
+        if(index < (usersList.length - 3) && index % 2 == 0) {
             userCard.innerHTML += `<a id="go-up" href=#>На початок списку</a>`
         };
         wrapperDiv.prepend(userCard);
@@ -86,7 +86,7 @@ function renderUsers(){  // відображення юзерів
             width: 34,                                 
             heigt: 34,    
             parentElement: userButtons,                           
-            onClick: function(event){              
+            onClick: function() {              
                 window.location.href=`user.html?id=${user.id}`;            
             }                                                                                         
         });   
@@ -95,7 +95,7 @@ function renderUsers(){  // відображення юзерів
             width: 34,                                 
             heigt: 34,    
             parentElement: userButtons,                           
-            onClick: function(event){              
+            onClick: function() {              
                 editUser(userCard, user.id, index)            
             }                                                                                         
         });    
@@ -104,7 +104,7 @@ function renderUsers(){  // відображення юзерів
             width: 34,                                 
             heigt: 34,    
             parentElement: userButtons,                           
-            onClick: function(event){          
+            onClick: function() {          
                 deleteUser(userCard, user.id)            
             }                                                                                         
         });   
@@ -114,24 +114,24 @@ function renderUsers(){  // відображення юзерів
     const wrapperDiv = document.querySelector('#wrapper');    
     wrapperDiv.innerHTML = "";
     
-    usersList.forEach((user, index)=>{
+    usersList.forEach((user, index) => {
     renderOneUser(user, index);
     });
 };
 
-const getUsers = async ()=>{ // GET
-    try{
+const getUsers = async () => { // GET
+    try {
         const response = await request('users/');
         usersList = response.data;
         renderUsers()
-    } catch(err){
+    } catch(err) {
         console.log(err)
     }
 }
-const addUser = async ()=>{  // POST
+const addUser = async () => {  // POST
     const name = document.querySelector('#add-name').value;
     const age = document.querySelector('#add-age').value;
-    try{
+    try {
         await request('users/', 'POST', {
             name,
             age,
@@ -139,30 +139,30 @@ const addUser = async ()=>{  // POST
         const response = await request('users/');
         usersList = response.data;
         renderUsers()
-    } catch(err){
+    } catch(err) {
         console.log(err)
     }
 }
-const editUser = async (event, id, index)=>{ // PUT
+const editUser = async (event, id, index) => { // PUT
     let name = document.querySelector(`#edit-name${index}`).value;
     let age = document.querySelector(`#edit-age${index}`).value;
-    try{
+    try {
         const response = await request (`users/${id}`, 'PUT', {
             name,
             age
         });
         usersList[index] = response.data;
         renderUsers()
-    } catch(err){
+    } catch(err) {
         console.log(err)
     }
 }
-const deleteUser = async (event, id)=>{   // DELETE
-    try{
+const deleteUser = async (event, id) => {   // DELETE
+    try {
         const response = await request (`users/${id}`, 'DELETE');
         usersList = usersList.filter((user) => user.id !== id);
         renderUsers()
-    } catch(err){
+    } catch(err) {
         console.log(err)
     }
 }
@@ -181,9 +181,9 @@ const addIcon = new Icon({
     width: 50,                                 
     heigt: 50,    
     parentElement: form,                           
-    onClick: function(event){ 
+    onClick: function() { 
         addUser()
-        setTimeout(()=>{
+        setTimeout(() => {
             document.getElementById('wrapper-form').classList.add('open-form')
         },500);          
     }                                                                                         
