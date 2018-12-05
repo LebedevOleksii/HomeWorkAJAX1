@@ -19,7 +19,7 @@ class Icon {            // іконки кнопки
         this.icon.style.transition = `opacity .5s`; 
         this.icon.style.cursor = 'pointer';   
         this.icon.src = source;                      
-        this.icon.addEventListener('click',(event)=> {        
+        this.icon.addEventListener('click',(event) => {        
             this.animateIcon();                      
             onClick(event);
         })
@@ -31,14 +31,14 @@ class Icon {            // іконки кнопки
 
     animateIcon() {         
         this.icon.style.opacity = 0;  
-        setTimeout(()=> {
+        setTimeout(() => {
             this.icon.style.opacity = 1;
         },300);
     }
 }
 
 
-const request = function (endpoint, method, data) {    //  запит
+const request = (endpoint, method, data) => {    //  запит
     const body = method === 'GET'? void 0 : JSON.stringify(data);
     return fetch(`${URL}/${endpoint}`, {
         method,
@@ -48,13 +48,13 @@ const request = function (endpoint, method, data) {    //  запит
             'Content-Type': 'application/json',
           }
     })
-    .then((res)=>res.json())
-    .catch((err)=>console.log(err));
+    .then((res) => res.json())
+    .catch((err) => console.log(err));
 };
 
 let usersList = [];
 
-function renderUsers(){  // відображення юзерів
+const renderUsers = () => {  // відображення юзерів
     function renderOneUser(user, index) {
         const wrapperDiv = document.querySelector('#wrapper');
         const userCard = document.createElement('div');
@@ -76,7 +76,7 @@ function renderUsers(){  // відображення юзерів
                 </div>
             </div>
         `;
-        if(index < (usersList.length - 3) && index%2) {
+        if(index < (usersList.length - 3) && index % 2 == 0) {
             userCard.innerHTML += `<a id="go-up" href=#>На початок списку</a>`
         };
         wrapperDiv.prepend(userCard);
@@ -114,12 +114,12 @@ function renderUsers(){  // відображення юзерів
     const wrapperDiv = document.querySelector('#wrapper');    
     wrapperDiv.innerHTML = "";
     
-    usersList.forEach((user, index)=> {
+    usersList.forEach((user, index) => {
     renderOneUser(user, index);
     });
 };
 
-const getUsers = async ()=> { // GET
+const getUsers = async () => { // GET
     try {
         const response = await request('users/');
         usersList = response.data;
@@ -128,7 +128,7 @@ const getUsers = async ()=> { // GET
         console.log(err)
     }
 }
-const addUser = async ()=> {  // POST
+const addUser = async () => {  // POST
     const name = document.querySelector('#add-name').value;
     const age = document.querySelector('#add-age').value;
     try {
@@ -143,7 +143,7 @@ const addUser = async ()=> {  // POST
         console.log(err)
     }
 }
-const editUser = async (id, index)=> { // PUT
+const editUser = async (event, id, index) => { // PUT
     let name = document.querySelector(`#edit-name${index}`).value;
     let age = document.querySelector(`#edit-age${index}`).value;
     try {
@@ -157,7 +157,7 @@ const editUser = async (id, index)=> { // PUT
         console.log(err)
     }
 }
-const deleteUser = async (id)=> {   // DELETE
+const deleteUser = async (event, id) => {   // DELETE
     try {
         const response = await request (`users/${id}`, 'DELETE');
         usersList = usersList.filter((user) => user.id !== id);
@@ -181,9 +181,9 @@ const addIcon = new Icon({
     width: 50,                                 
     heigt: 50,    
     parentElement: form,                           
-    onClick: function(event) { 
+    onClick: function() { 
         addUser()
-        setTimeout(()=> {
+        setTimeout(() => {
             document.getElementById('wrapper-form').classList.add('open-form')
         },500);          
     }                                                                                         

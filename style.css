@@ -48,7 +48,7 @@ input::placeholder {
     color: rgb(153, 147, 147);
     margin: 110px 132px;
 }
-a {
+.a-string {
     text-decoration-line: none;
 }
 #card-id {

@@ -1,4 +1,3 @@
-let res;
 
 (function request(){
     let params = new URL(window.location.href).searchParams;
@@ -6,17 +5,16 @@ let res;
     
     fetch(`https://test-users-api.herokuapp.com/users/${id}`)
     .then(response => response.json())
-    .then(response=> res = response.data)
-    .then(res=>render(res))
-    .catch(err=>console.log(err));
+    .then(response => render(response.data))
+    .catch(err => console.log(err));
 })();
 
-function render(){
+function render(user){
     const info = document.querySelector('#user-info');
     info.innerHTML = 
     `
-        <span>Імя: ${res.name}</span> <br/>
-        <span>Вік: ${res.age}</span> <br/>
-        <span>ID: ${res.id}</span> <br/>
+        <span>Імя: ${user.name}</span> <br/>
+        <span>Вік: ${user.age}</span> <br/>
+        <span>ID: ${user.id}</span> <br/>
     `
 }
